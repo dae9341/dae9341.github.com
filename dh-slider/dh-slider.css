@@ -1,6 +1,7 @@
 ul li{list-style: none}
-#bnrSlider{position: relative;width: 985px;height: 104px;overflow: hidden;}
-#bnrSlider .leftBtn{width: 40px;height: 40px;position: absolute;top:50%;margin-top: -20px;left: 0; border-radius: 50%; z-index: 2;}
-#bnrSlider .rightBtn{width: 40px;height: 40px;position: absolute;top:50%;margin-top: -20px;right: 0; border-radius: 50%; z-index: 2;}
-.dh-slider{overflow: hidden;}
-.dh-slider li{float:left; position: absolute; top:0; left: 0; transform:translate3d(0,0,0)}
+#dh-bnrSlider{overflow: hidden; position: relative;}
+#dh-bnrSlider .leftBtn{width: 40px;height: 40px;position: absolute;top:50%;margin-top: -20px;left: 0; border-radius: 50%; z-index: 2;}
+#dh-bnrSlider .rightBtn{width: 40px;height: 40px;position: absolute;top:50%;margin-top: -20px;right: 0; border-radius: 50%; z-index: 2;}
+.dh-slider{position: absolute; margin: 0; padding: 0; overflow: hidden}
+.dh-slider li{float:left;}
+.dh-slider li img{width: 100%;}
