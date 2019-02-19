@@ -1,7 +1,10 @@
 var dh_slider = function dh_slider(opt) {
     opt = $.extend({
-        dh_slider:'#dh-bnrSlider'
-    });
+        dh_slider:'#dh-bnrSlider',
+        dh_leftBtn:'',
+        dh_rightBtn:'',
+    },opt);
+
 
     var dhSlider = $(opt.dh_slider); //#dh-bnrSlider
     var dhSliderUl = $(opt.dh_slider).find('ul'); // ul.dh_slider
