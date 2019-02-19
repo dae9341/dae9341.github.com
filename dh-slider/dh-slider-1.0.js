@@ -4,7 +4,7 @@ var dh_slider = function dh_slider(opt) {
         dh_slider:'#dh-bnrSlider',
         dh_leftBtn:'',
         dh_rightBtn:''
-    });
+    },opt);
 
     var $dhSlider = $(opt.dh_slider); //#dh-bnrSlider
     var $dhSliderUl = $dhSlider.find('ul'); // ul.dh_slider
