@@ -2,6 +2,9 @@ ul li{list-style: none}
 #dh-bnrSlider{/*overflow: hidden;*/ position: relative;}
 #dh-bnrSlider .leftBtn{width: 40px;height: 40px;position: absolute;top:50%;margin-top: -20px;left: 0; border-radius: 50%; z-index: 2;}
 #dh-bnrSlider .rightBtn{width: 40px;height: 40px;position: absolute;top:50%;margin-top: -20px;right: 0; border-radius: 50%; z-index: 2;}
-.dh-slider{position: absolute; margin: 0; padding: 0; overflow: hidden}
-.dh-slider li{float:left;}
-.dh-slider li img{width: 100%;}
+#dh-bnrSlider .dh-slider{position: absolute; margin: 0; padding: 0; overflow: hidden}
+#dh-bnrSlider .dh-slider li{float:left;}
+#dh-bnrSlider .dh-slider li img{width: 100%;}
+#dh-bnrSlider .dh-indicator{position: absolute; bottom: 20px; left: 0; width: 100%; text-align: center}
+#dh-bnrSlider .dh-indicator a{width: 15px; height: 15px; border-radius: 50%; display: inline-block; margin: 0 5px; background-color: #fff; cursor:pointer}
+#dh-bnrSlider .dh-indicator a.on{background-color: deepskyblue}

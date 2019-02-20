@@ -5,6 +5,7 @@
     <title>Title</title>
     <link rel="stylesheet" href="dh-slider/dh-slider.css">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!--<script type="text/javascript" src="dh-slider/dh-slider.js"></script>-->
     <script type="text/javascript" src="dh-slider/dh-slider-1.0.js"></script>
 </head>
 <body>
@@ -21,16 +22,21 @@
 
         </div>
     </div>
+
+
 <script>
 
     $(function () {
         var start = new dh_slider({
             dh_slider:'#dh-bnrSlider',
             dh_leftBtn: '#leftBtn',
-            dh_rightBtn: '#rightBtn'
+            dh_rightBtn: '#rightBtn',
+            dh_indicator:'#dh-bnrSlider .dh-indicator',
+            firstSlide:2
         });
 
         console.log(start + '~~~~~');
+
     });
 
 </script>
