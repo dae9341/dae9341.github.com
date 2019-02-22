@@ -15,8 +15,8 @@
         <ul class="dh-slider">
             <li class="111"><img src="dh-slider/images/1.jpg"/> </li>
             <li class="222"><img src="dh-slider/images/2.jpg"/> </li>
-            <!--<li class="333"><img src="dh-slider/images/3.jpg"/> </li>-->
-            <!--<li class="444"><img src="dh-slider/images/4.jpg"/> </li>-->
+            <li class="333"><img src="dh-slider/images/3.jpg"/> </li>
+            <li class="444"><img src="dh-slider/images/4.jpg"/> </li>
         </ul>
         <div class="dh-indicator">
 
@@ -32,7 +32,7 @@
             dh_leftBtn: '#leftBtn',
             dh_rightBtn: '#rightBtn',
             dh_indicator:'#dh-bnrSlider .dh-indicator',
-            firstSlide:2
+            firstSlide: 1 //Math.floor(Math.random()*2) + 1 //1~length 랜덤
         });
 
         console.log(start + '~~~~~');
