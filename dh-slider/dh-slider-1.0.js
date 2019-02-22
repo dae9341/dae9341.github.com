@@ -5,30 +5,32 @@ var dh_slider = function dh_slider(opt) {
         dh_leftBtn:'', //좌측버튼
         dh_rightBtn:'', //우측버튼
         dh_indicator:'', //인디케이터 DOM
-        firstSlide:1  // 시작페이지 설정 1~length
+        firstSlide:1,  // 시작페이지 설정 1~length
+        loop:true //루프 설정 :::::::::::::::::::::::::::::::::::::::::개발예정
     },opt);
 
     var $dhSlider = $(opt.dh_slider); //#dh-bnrSlider
     var $dhSliderUl = $dhSlider.find('ul'); // ul.dh_slider
-    var $dhSliderUlClone = $dhSliderUl.clone(true).appendTo($dhSlider);
+    var $dhSliderUlClone = $dhSliderUl.clone(true).appendTo($dhSlider); //슬라이드 복제
     var $leftBtn = $(opt.dh_leftBtn); // leftBtn
     var $rightBtn = $(opt.dh_rightBtn); // rightBtn
     var $sliderLis = $dhSliderUl.children('li');  //li
     var intSliderCnt = $sliderLis.length; //슬라이드 갯수
-    var slideWidth = $sliderLis[0].offsetWidth;
-    var slideHeight = $sliderLis[0].offsetHeight;
-    var onIndexNum = 1; // 0~length
-    var intStartSlide = opt.firstSlide;
-    var cloneFlag = false;
-    var intCloneItem;
-    var $dhIndicator = $(opt.dh_indicator);
+    var slideWidth = $sliderLis[0].offsetWidth; // 슬라이드 width값
+    var slideHeight = $sliderLis[0].offsetHeight; //슬라이드 height값
+    var onIndexNum = 1; // 0~length 현재 활성화페이지
+    var intStartSlide = opt.firstSlide; // 1~length 시작 페이지
+    var cloneFlag = false; // 슬라이드 요소 2개일때 : true
+    var intCloneItem; // 클론하는 item의 인덱스 저장변수
+    var $dhIndicator = $(opt.dh_indicator); //인디케이터 DOM
+    var isLoop = $(opt.loop); //루프 설정
 
+
+    // dh-slider 시작
     function start(){
 
-        console.log($leftBtn);
-        console.log($rightBtn);
-
         slideSet();
+
         try {
             eventBind();
         }catch (e) {
@@ -36,9 +38,8 @@ var dh_slider = function dh_slider(opt) {
         }
     }
 
-    //slide style 설정
+    // dh-slider css, 변수 세팅
     function slideSet (){
-
 
         for(var i= 0; i < intSliderCnt; i++){
             $dhIndicator.append('<a></a>');
@@ -61,7 +62,29 @@ var dh_slider = function dh_slider(opt) {
 
     }
 
-    // 활성화 페이지 설정 startLi 1~length
+    //이벤트 바인딩
+    function eventBind (){
+        //좌측버튼 클릭
+        $leftBtn.on('click', function () {
+            leftSlideMove(onIndexNum);
+        });
+
+        //우측버튼 클릭
+        $rightBtn.on('click', function () {
+            rightSlideMove(onIndexNum);
+        });
+
+        //인디케이터 요소 클릭
+        $dhIndicator.find('a').on('click', function () {
+            $dhIndicator.find('a').removeClass('on');
+            $(this).addClass('on');
+            onIndexNum = $(this).index();
+            onSlideSet(onIndexNum + 1);
+        });
+
+    }
+
+    // 활성화 페이지 설정 startLi: 1~length
     function onSlideSet(startLi) {
         if(cloneFlag){
             if(startLi === 1){
@@ -88,109 +111,100 @@ var dh_slider = function dh_slider(opt) {
         }
     }
 
-    function eventBind (){
-        $leftBtn.on('click', function () {
-            $dhSliderUl.css({'left':'-'+slideWidth*2+'px'});
-            $dhSliderUl.animate({left:'+='+slideWidth+'px'});
+    //좌측 이동 인자값: 현재 활성화 페이지 index
+    function leftSlideMove(slideIndex) {
+
+        $dhSliderUl.css({'left':'-'+slideWidth*2+'px'});
+        $dhSliderUl.animate({left:'+='+slideWidth+'px'});
 
 
-            //Clone필요한 index넘버 추출 (li의 위치조정)
-            for(var i= 0; i < intSliderCnt; i++){
-                if($dhSliderUlClone.find('li').eq(i).find('img').attr('src') === $dhSliderUl.find('li').eq(intSliderCnt-1).find('img').attr('src')) {
-                    intCloneItem = i;
-                }
+        //Clone필요한 index넘버 추출 (li의 위치조정)
+        for(var i= 0; i < intSliderCnt; i++){
+            if($dhSliderUlClone.find('li').eq(i).find('img').attr('src') === $dhSliderUl.find('li').eq(intSliderCnt-1).find('img').attr('src')) {
+                intCloneItem = i;
+            }
+        }
+
+        //이미지 2개일때
+        if(cloneFlag){
+            if (intCloneItem === 0) {
+                intCloneItem += 1;
+            } else {
+                intCloneItem -= 1;
             }
 
-            if(cloneFlag){
-
-                if (intCloneItem === 0) {
-                    intCloneItem += 1;
-                } else {
-                    intCloneItem -= 1;
-                }
-
-                if(onIndexNum <= 0){
-                    onIndexNum = 1;
-                }else{
-                    onIndexNum--;
-                }
+            if(slideIndex <= 0){
+                slideIndex = 1;
             }else{
-                if(onIndexNum <= 0){
-                    onIndexNum = intSliderCnt-1;
-                }else{
-                    onIndexNum--;
-                }
+                slideIndex--;
             }
-
-            //li태그 이동
-            $dhSliderUl.find('li').eq(intSliderCnt-1).remove();
-            $dhSliderUlClone.find('li').eq(intCloneItem).clone(true).insertBefore($dhSliderUl.find('li').eq(0));
-
-
-            //indicator
-            $dhIndicator.find('a').removeClass('on');
-            $dhIndicator.find('a').eq(onIndexNum).addClass('on');
-
-            console.log(onIndexNum);
-
-            console.log('left!::::', onIndexNum);
-        });
-
-        $rightBtn.on('click', function () {
-            $dhSliderUl.css({'left':'0px'});
-            $dhSliderUl.animate({left:'-='+slideWidth+'px'});
-
-            //Clone필요한 index넘버 추출
-            for(var i= 0; i < intSliderCnt; i++){
-                if($dhSliderUlClone.find('li').eq(i).find('img').attr('src') === $dhSliderUl.find('li').eq(0).find('img').attr('src')) {
-                    intCloneItem = i;
-                }
-            }
-
-            //이미지 2개 일때
-            if(cloneFlag) {
-                if (intCloneItem === 0) {
-                    intCloneItem += 1;
-                } else {
-                    intCloneItem -= 1;
-                }
-
-                if(onIndexNum >= intSliderCnt-2 ){
-                    onIndexNum = 0;
-                }else {
-                    onIndexNum++;
-                }
+        }else{//이미지 3개 이상
+            if(slideIndex <= 0){
+                slideIndex = intSliderCnt-1;
             }else{
-                if(onIndexNum >= intSliderCnt-1 ){
-                    onIndexNum = 0;
-                }else {
-                    onIndexNum++;
-                }
+                slideIndex--;
             }
+        }
+
+        //li태그 이동
+        $dhSliderUl.find('li').eq(intSliderCnt-1).remove();
+        $dhSliderUlClone.find('li').eq(intCloneItem).clone(true).insertBefore($dhSliderUl.find('li').eq(0));
 
 
-            //li태그 이동
-            $dhSliderUl.find('li').eq(0).remove();
-            $dhSliderUlClone.find('li').eq(intCloneItem).clone(true).appendTo($dhSliderUl);
+        //indicator
+        $dhIndicator.find('a').removeClass('on');
+        $dhIndicator.find('a').eq(slideIndex).addClass('on');
 
-            //indicator
-            $dhIndicator.find('a').removeClass('on');
-            $dhIndicator.find('a').eq(onIndexNum).addClass('on');
-        });
-
-        $dhIndicator.find('a').on('click', function () {
-            $dhIndicator.find('a').removeClass('on');
-            $(this).addClass('on');
-            onIndexNum = $(this).index();
-            onSlideSet(onIndexNum + 1);
-        });
-
-    }
-    
-    function slideRightMove(value) {
-
+        onIndexNum = slideIndex;
     }
 
+    //우측 이동 인자값: 현재 활성화 페이지 index
+    function rightSlideMove(slideIndex) {
+        $dhSliderUl.css({'left':'0px'});
+        $dhSliderUl.animate({left:'-='+slideWidth+'px'});
+
+        //Clone필요한 index넘버 추출
+        for(var i= 0; i < intSliderCnt; i++){
+            if($dhSliderUlClone.find('li').eq(i).find('img').attr('src') === $dhSliderUl.find('li').eq(0).find('img').attr('src')) {
+                intCloneItem = i;
+            }
+        }
+
+        //이미지 2개 일때
+        if(cloneFlag) {
+            if (intCloneItem === 0) {
+                intCloneItem += 1;
+            } else {
+                intCloneItem -= 1;
+            }
+
+            if(slideIndex >= intSliderCnt-2 ){
+                slideIndex = 0;
+            }else {
+                slideIndex++;
+            }
+        }else{
+            if(slideIndex >= intSliderCnt-1 ){
+                slideIndex = 0;
+            }else {
+                slideIndex++;
+            }
+        }
+
+
+        //li태그 이동
+        $dhSliderUl.find('li').eq(0).remove();
+        $dhSliderUlClone.find('li').eq(intCloneItem).clone(true).appendTo($dhSliderUl);
+
+        //indicator
+        $dhIndicator.find('a').removeClass('on');
+        $dhIndicator.find('a').eq(slideIndex).addClass('on');
+
+        onIndexNum = slideIndex;
+    }
+
+
+    //실행부
     try {
         start();
     }catch (e) {
