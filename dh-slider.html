@@ -13,10 +13,10 @@
         <button class="leftBtn" type="button" id="leftBtn">left</button>
         <button class="rightBtn" type="button" id="rightBtn">right</button>
         <ul class="dh-slider">
-            <li class="111"><img src="dh-slider/images/1.jpg"/></li>
-            <li class="222"><img src="dh-slider/images/2.jpg"/></li>
-            <li class="333"><img src="dh-slider/images/3.jpg"/></li>
-            <li class="444"><img src="dh-slider/images/4.jpg"/></li>
+            <li class="111"><img src="dh-slider/images/1.jpg" width="600" height="350"/></li>
+            <li class="222"><img src="dh-slider/images/2.jpg" width="600" height="350"/></li>
+            <li class="333"><img src="dh-slider/images/3.jpg" width="600" height="350"/></li>
+            <li class="444"><img src="dh-slider/images/4.jpg" width="600" height="350"/></li>
         </ul>
         <div class="dh-indicator">
 
@@ -32,7 +32,8 @@
             dh_leftBtn: '#leftBtn',
             dh_rightBtn: '#rightBtn',
             dh_indicator:'#dh-bnrSlider .dh-indicator',
-            firstSlide: Math.floor(Math.random()*4) + 1 //1~length 랜덤
+            firstSlide: Math.floor(Math.random()*4) + 1, //1~length 랜덤
+            loop:false
         });
 
         console.log(start + '~~~~~');

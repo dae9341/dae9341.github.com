@@ -6,7 +6,9 @@ var dh_slider = function dh_slider(opt) {
         dh_rightBtn:'', //우측버튼
         dh_indicator:'', //인디케이터 DOM
         firstSlide:1,  // 시작페이지 설정 1~length
-        loop:true //루프 설정 :::::::::::::::::::::::::::::::::::::::::개발예정
+        loop:true, //루프 설정
+        width:'',
+        height:''
     },opt);
 
     var $dhSlider = $(opt.dh_slider); //#dh-bnrSlider
@@ -16,14 +18,14 @@ var dh_slider = function dh_slider(opt) {
     var $rightBtn = $(opt.dh_rightBtn); // rightBtn
     var $sliderLis = $dhSliderUl.children('li');  //li
     var intSliderCnt = $sliderLis.length; //슬라이드 갯수
-    var slideWidth = $sliderLis[0].offsetWidth; // 슬라이드 width값
-    var slideHeight = $sliderLis[0].offsetHeight; //슬라이드 height값
+    var slideWidth = $sliderLis.children('img')[0].width; // 슬라이드 width값
+    var slideHeight = $sliderLis.children('img')[0].height; //슬라이드 height값
     var onIndexNum = 1; // 0~length 현재 활성화페이지
     var intStartSlide = opt.firstSlide; // 1~length 시작 페이지
     var cloneFlag = false; // 슬라이드 요소 2개일때 : true
     var intCloneItem; // 클론하는 item의 인덱스 저장변수
     var $dhIndicator = $(opt.dh_indicator); //인디케이터 DOM
-    var isLoop = $(opt.loop); //루프 설정
+    var isLoop = opt.loop; //루프 설정
 
 
     // dh-slider 시작
@@ -57,6 +59,7 @@ var dh_slider = function dh_slider(opt) {
 
         onIndexNum = intStartSlide-1;
         $dhIndicator.find('a').eq(onIndexNum).addClass('on');
+        loopCheck();
 
         onSlideSet(intStartSlide);
 
@@ -67,11 +70,13 @@ var dh_slider = function dh_slider(opt) {
         //좌측버튼 클릭
         $leftBtn.on('click', function () {
             leftSlideMove(onIndexNum);
+            loopCheck();
         });
 
         //우측버튼 클릭
         $rightBtn.on('click', function () {
             rightSlideMove(onIndexNum);
+            loopCheck();
         });
 
         //인디케이터 요소 클릭
@@ -79,18 +84,45 @@ var dh_slider = function dh_slider(opt) {
             $dhIndicator.find('a').removeClass('on');
             $(this).addClass('on');
             onIndexNum = $(this).index();
+            if(cloneFlag){
+                if(onIndexNum === 0){
+                    $dhSliderUl.find('li').eq(2).remove();
+                }else{
+                    $dhSliderUl.find('li').eq(0).remove();
+                }
+
+            }
             onSlideSet(onIndexNum + 1);
+            loopCheck();
+
         });
 
     }
+
+    function loopCheck() {
+
+        if(!isLoop){
+            if(onIndexNum === 0){
+                $leftBtn.addClass('noneClick');
+                $rightBtn.removeClass('noneClick');
+            }else if(onIndexNum === intSliderCnt -1 || (onIndexNum === 1 && cloneFlag)){
+                $rightBtn.addClass('noneClick');
+                $leftBtn.removeClass('noneClick');
+            }else{
+                $leftBtn.removeClass('noneClick');
+                $rightBtn.removeClass('noneClick');
+            }
+        }
+    }
+
 
     // 활성화 페이지 설정 startLi: 1~length
     function onSlideSet(startLi) {
         if(cloneFlag){
             if(startLi === 1){
-                $sliderLis.eq(1).clone(true).insertBefore($sliderLis.eq(0));
+                $dhSliderUlClone.find('li').eq(1).clone(true).insertBefore($dhSliderUl.find('li').eq(0));
             }else{
-                $sliderLis.eq(0).clone(true).appendTo($dhSliderUl);
+                $dhSliderUlClone.find('li').eq(0).clone(true).appendTo($dhSliderUl);
             }
         }else {
             $dhSliderUl.find('li').remove();

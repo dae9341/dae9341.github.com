@@ -2,6 +2,8 @@ ul li{list-style: none}
 #dh-bnrSlider{/*overflow: hidden;*/ position: relative;}
 #dh-bnrSlider .leftBtn{width: 40px;height: 40px;position: absolute;top:50%;margin-top: -20px;left: 0; border-radius: 50%; z-index: 2;}
 #dh-bnrSlider .rightBtn{width: 40px;height: 40px;position: absolute;top:50%;margin-top: -20px;right: 0; border-radius: 50%; z-index: 2;}
+#dh-bnrSlider .leftBtn.noneClick{opacity: 0.5; pointer-events: none}
+#dh-bnrSlider .rightBtn.noneClick{opacity: 0.5; pointer-events: none}
 #dh-bnrSlider .dh-slider{position: absolute; margin: 0; padding: 0; overflow: hidden}
 #dh-bnrSlider .dh-slider li{float:left;}
 #dh-bnrSlider .dh-slider li img{width: 100%;}
