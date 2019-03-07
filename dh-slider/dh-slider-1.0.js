@@ -8,7 +8,8 @@ var dh_slider = function dh_slider(opt) {
         firstSlide:1,  // 시작페이지 설정 1~length
         loop:true, //루프 설정
         width:'',
-        height:''
+        height:'',
+        autoplay:false
     },opt);
 
     var $dhSlider = $(opt.dh_slider); //#dh-bnrSlider
@@ -26,18 +27,22 @@ var dh_slider = function dh_slider(opt) {
     var intCloneItem; // 클론하는 item의 인덱스 저장변수
     var $dhIndicator = $(opt.dh_indicator); //인디케이터 DOM
     var isLoop = opt.loop; //루프 설정
+    var isAutoPlay = opt.autoplay ; //자동슬라이드
+    var autoPlayInterval = null;
 
 
     // dh-slider 시작
     function start(){
 
         slideSet();
+        autoPlay(isAutoPlay);
 
         try {
             eventBind();
         }catch (e) {
             console.log(e);
         }
+
     }
 
     // dh-slider css, 변수 세팅
@@ -70,13 +75,15 @@ var dh_slider = function dh_slider(opt) {
         //좌측버튼 클릭
         $leftBtn.on('click', function () {
             leftSlideMove(onIndexNum);
-            loopCheck();
+            clearInterval(autoPlayInterval);
+            autoPlay(isAutoPlay);
         });
 
         //우측버튼 클릭
         $rightBtn.on('click', function () {
             rightSlideMove(onIndexNum);
-            loopCheck();
+            clearInterval(autoPlayInterval);
+            autoPlay(isAutoPlay);
         });
 
         //인디케이터 요소 클릭
@@ -188,6 +195,8 @@ var dh_slider = function dh_slider(opt) {
         $dhIndicator.find('a').eq(slideIndex).addClass('on');
 
         onIndexNum = slideIndex;
+
+        loopCheck();
     }
 
     //우측 이동 인자값: 현재 활성화 페이지 index
@@ -233,6 +242,20 @@ var dh_slider = function dh_slider(opt) {
         $dhIndicator.find('a').eq(slideIndex).addClass('on');
 
         onIndexNum = slideIndex;
+
+        loopCheck();
+    }
+    
+    function autoPlay(flag) {
+        if(!flag){
+            return false;
+        }
+        else{
+            autoPlayInterval = setInterval(function () {
+                rightSlideMove(onIndexNum);
+            },2000);
+
+        }
     }
 
 
