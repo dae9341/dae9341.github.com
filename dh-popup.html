@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="dh-popup/dh-popup.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="dh-popup/dh-popup-1.0.js"></script>
+</head>
+<body>
+
+<a href="#" id="popupBtn" class="popupBtn">button</a>
+
+<div id="dh-popup" class="popup" style="width: 500px; height: 500px; border:2px solid brown; background-color: #fff;">
+    ~~~~~~~~~~~~
+    ~~~~~~~~~~~~
+    ~~~~~~~~~~~~
+    ~~~~~~~~~~~~
+    ~~~~~~~~~~~~
+    ~~~~~~~~~~~~
+    ~~~~~~~~~~~~
+    ~~~~~~~~~~~~
+    ~~~~~~~~~~~~
+    ~~~~~~~~~~~~
+    ~~~~~~~~~~~~
+</div>
+
+
+<script>
+    $(function () {
+        var popup = new dh_popup({
+            button:'#popupBtn',
+            popup:'#dh-popup'
+        });
+
+    });
+
+
+</script>
+</body>
+</html>
