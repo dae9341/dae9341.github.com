@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<style>
+    .wrap{width: 800px;margin: 0 auto; position: relative;}
+    .wrap > div{width: 100%;}
+    .a{height: 600px; background-color: antiquewhite}
+    .b{height: 900px; background-color: brown}
+    .c{height: 300px; background-color: coral}
+    .d{height: 400px; background-color: darkcyan}
+    .menu{width: 800px; height: 50px; margin: 0 auto; border:2px solid black; box-sizing: border-box; }
+    .menuWrap{width: 100%;}
+    .menuWrap.fixed{position:fixed; top:0; left: 0;}
+</style>
+<body>
+<div class="wrap">
+    <div class="a">
+
+    </div>
+    <div class="b">
+        <div class="menuWrap">
+            <div class="menu">
+
+            </div>
+        </div>
+    </div>
+    <div class="c">
+
+    </div>
+    <div class="d">
+
+    </div>
+    <button class="top" style="position: fixed; right: 0px; bottom: 50px; display: block; width: 40px; height: 40px;">
+        top
+    </button>
+</div>
+</body>
+<script>
+    $(function () {
+        var scrollFixedClass = new scrollFixed();
+
+        $( '.top' ).click( function() {
+            $( 'html, body' ).animate( { scrollTop : 0 }, 400 );
+            return false;
+        } );
+    });
+    
+    function scrollFixed() {
+        var self = this;
+        var o = {
+            window : $(window),
+            wrap : $('.wrap'),
+            menuWrap : $('.b'),
+            menu : $('.menuWrap'),
+        };
+
+        this.o = o;
+
+        o.window.scroll(function () {
+            var top = $(this).scrollTop();
+            var menu_top = o.menu.offset().top;
+            console.log(top, menu_top);
+            if(top > menu_top){
+                self.fixed();
+            }else{
+                o.menu.removeClass('fixed');
+                o.menuWrap.append(o.menu);
+            }
+        });
+
+        console.log(o.menu);
+    }
+
+    scrollFixed.prototype.fixed = function () {
+        var o = this.o;
+        o.menu.addClass('fixed');
+        o.wrap.append(o.menu);
+    };
+
+</script>
+</html>

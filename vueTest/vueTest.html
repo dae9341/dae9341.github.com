@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+
+    <div id="example">
+        <my-component :name="nameVal" :number="numberVal" :rm="reversedMessage" ></my-component>
+    </div>
+
+</body>
+
+<script>
+    Vue.component('my-component', {
+        props:{
+            rm:String
+        },
+        template:
+            '  <div><p>이름: "{{ this.rm }}"</p>\n' +
+            ' <p>번호:"{{ this.number }}"</p></div>',
+    });
+
+
+
+
+
+    $(document).ready(function() {
+
+        $.ajax({
+            type:"GET",
+            url:"vueTest.json",
+            dataType:"JSON", //
+            success : function(data) {
+                console.log(data);
+            },
+            complete : function(data) {
+                // 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
+                // TODO
+            },
+            error : function(xhr, status, error) {
+                alert("에러발생");
+            }
+
+        }).done(function (data) {
+            new Vue({
+                el:'#example',
+                message:'안녕하세요',
+                data: data,
+                computed: {
+                    reversedMessage: function () {
+                        return this.message.split('').reverse().join('');
+                    },
+
+                    nameVal: function () {
+                        return this.data.data.name[0];
+                    },
+                    numberVal: function () {
+                        return this.data.data.number[0];
+                    }
+
+                }
+            });
+        });
+
+    });
+
+
+
+</script>
+</html>
