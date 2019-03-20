@@ -6,26 +6,46 @@
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="../node_modules/vue/dist/vue.js"></script>
+    <script type="text/javascript" src="../dh-slider/dh-slider-1.0.js"></script>
 </head>
 <body>
 
     <div id="example">
-        <my-component :name="nameVal" :number="numberVal" :rm="reversedMessage" ></my-component>
+        <my-component :name="nameData" :numb="numbData" ></my-component>
+        <div v-for="item in items">
+            {{ item.message }}
+        </div>
     </div>
 
 </body>
 
 <script>
+
     Vue.component('my-component', {
         props:{
-            rm:String
+            msg:String,
+            rm:String,
+            dss: Object,
+            name: String,
+            numb: Number
         },
         template:
-            '  <div><p>이름: "{{ this.rm }}"</p>\n' +
-            ' <p>번호:"{{ this.number }}"</p></div>',
+            '<div class=""><p>{{ this.name }} : {{ this.numb }}</p></div>',
     });
 
+    /*new Vue({
+        el:'#example',
 
+        data:{
+            message:'abcdef',
+        },
+        computed: {
+            reversedMessage: function () {
+                return this.message.split('').reverse().join('');
+            }
+        }
+    });
+*/
 
 
 
@@ -47,28 +67,35 @@
             }
 
         }).done(function (data) {
+
+            // durl
+
+
             new Vue({
                 el:'#example',
-                message:'안녕하세요',
-                data: data,
+                data:{
+                    jsonData: data.data,
+                    message:'abcdef',
+                    items: [
+                        { message: 'Foo' },
+                        { message: 'Bar' }
+                    ]
+                },
                 computed: {
                     reversedMessage: function () {
                         return this.message.split('').reverse().join('');
                     },
-
-                    nameVal: function () {
-                        return this.data.data.name[0];
+                    nameData: function () {
+                        return this.jsonData[0].name;
                     },
-                    numberVal: function () {
-                        return this.data.data.number[0];
-                    }
-
+                    numbData: function () {
+                        return this.jsonData[0].number;
+                    },
                 }
             });
         });
 
     });
-
 
 
 </script>
