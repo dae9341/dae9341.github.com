@@ -1,0 +1,3 @@
+.main > div{width: 50%; height: 800px;}
+.main .dataViewWrap{float: left; overflow: auto; border:1px solid; box-sizing: border-box;}
+.main .dataInputWrap{float: right;padding: 0 20px; box-sizing: border-box}
