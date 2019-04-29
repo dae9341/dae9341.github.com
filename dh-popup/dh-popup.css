@@ -2,6 +2,12 @@
     display: none;
 }
 
+.popup .closeBtn{
+    position: absolute;
+    top:0;
+    right: 0;
+}
+
 .dimLayer{
     width: 100%;
     height: 100%;
