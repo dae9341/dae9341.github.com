@@ -5,8 +5,8 @@ ul li{list-style: none}
 #dh-bnrSlider .leftBtn.noneClick{opacity: 0.5; pointer-events: none}
 #dh-bnrSlider .rightBtn.noneClick{opacity: 0.5; pointer-events: none}
 #dh-bnrSlider .dh-slider{position: absolute; margin: 0; padding: 0; overflow: hidden}
-#dh-bnrSlider .dh-slider li{float:left;}
-#dh-bnrSlider .dh-slider li img{width: 100%;}
+#dh-bnrSlider .dh-slider li{float:left; width: 200px; height: 100px;}
+#dh-bnrSlider .dh-slider li img{width: 100%; height: 100%;}
 #dh-bnrSlider .dh-indicator{position: absolute; bottom: 20px; left: 0; width: 100%; text-align: center}
 #dh-bnrSlider .dh-indicator a{width: 15px; height: 15px; border-radius: 50%; display: inline-block; margin: 0 5px; background-color: #fff; cursor:pointer}
 #dh-bnrSlider .dh-indicator a.on{background-color: deepskyblue}
