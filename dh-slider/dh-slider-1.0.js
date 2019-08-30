@@ -36,6 +36,8 @@ var dh_slider = function dh_slider(opt) {
     var viewWidth = slideWidth * viewItem;
     var moveItem = opt.moveItem;
 
+    var viewItemMax = false;
+
 
     // dh-slider 시작
     function start(){
@@ -62,6 +64,10 @@ var dh_slider = function dh_slider(opt) {
         if(intSliderCnt === 2){
             intSliderCnt=3;
             cloneFlag = true;
+        }
+        if(intSliderCnt === viewItem+1){
+            intSliderCnt++;
+            viewItemMax = true;
         }
 
         $dhSlider.css({'width':viewWidth,'height':slideHeight,'overflow':'hidden'});
@@ -137,6 +143,9 @@ var dh_slider = function dh_slider(opt) {
             }else{
                 $dhSliderUlClone.find('li').eq(0).clone(true).appendTo($dhSliderUl);
             }
+        }else if(viewItemMax){
+            $dhSliderUl.find('li').eq(0).clone(true).insertAfter($dhSliderUl.find('li').eq(viewItem));
+
         }else {
             $dhSliderUl.find('li').remove();
             if (startLi === 1) {
@@ -160,7 +169,7 @@ var dh_slider = function dh_slider(opt) {
     function leftSlideMove(slideIndex) {
 
         $dhSliderUl.css({'left':'-'+slideWidth*2+'px'});
-        $dhSliderUl.animate({left:'+='+slideWidth+'px'});
+        $dhSliderUl.animate({left:'+='+slideWidth*moveItem+'px'});
 
         var temp = [];
 
@@ -172,6 +181,9 @@ var dh_slider = function dh_slider(opt) {
                     temp.push(i);
                 }
             }
+        }
+
+        if(intSliderCnt === viewItem+1){
         }
 
         //이미지 2개일때
@@ -214,7 +226,7 @@ var dh_slider = function dh_slider(opt) {
     //우측 이동 인자값: 현재 활성화 페이지 index
     function rightSlideMove(slideIndex) {
         $dhSliderUl.css({'left':'0px'});
-        $dhSliderUl.animate({left:'-='+slideWidth+'px'});
+        $dhSliderUl.animate({left:'-='+slideWidth*moveItem+'px'});
 
         var temp = [];
         for(var j = 0; j < moveItem; j++) {
